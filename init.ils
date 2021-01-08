@@ -1,0 +1,2 @@
+; Initialize skill_tools
+loadi("src/init.ils")

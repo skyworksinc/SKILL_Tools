@@ -1,0 +1,25 @@
+{% set name = "skill_tools" %}
+{% set version = "1.0.0" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  - path: ../src
+    folder: src
+  - path: ../docs
+    folder: docs
+
+requirements:
+  build:
+    - python {{ python }}
+    - setuptools
+
+  run:
+    - ids-skill
+
+about:
+  home: https://github.com/skyworksinc/SKILL_Tools
+  license: MIT
+  summary: qub and qtest SKILL Libraries

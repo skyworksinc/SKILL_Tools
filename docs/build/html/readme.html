@@ -1,0 +1,554 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SKILL Tools &mdash; skill_tools 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to skill_tools’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> skill_tools
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SKILL Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#project-structure">Project Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#importing-the-project">Importing the project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unit-testing">Unit Testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-test">Example Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#main-functions-and-macros">Main Functions and Macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-runalltests"><code class="docutils literal notranslate"><span class="pre">qtest::runAllTests</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-testcase"><code class="docutils literal notranslate"><span class="pre">qtest::TestCase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#skipping-a-test">Skipping a test</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#marking-a-test-that-you-expect-to-fail">Marking a test that you expect to fail</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-testsuite"><code class="docutils literal notranslate"><span class="pre">qtest::TestSuite</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-runsuites"><code class="docutils literal notranslate"><span class="pre">qtest::runSuites</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#assertions">Assertions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-assertequal"><code class="docutils literal notranslate"><span class="pre">qtest::assertEqual</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-assertnotequal"><code class="docutils literal notranslate"><span class="pre">qtest::assertNotEqual</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-asserttrue"><code class="docutils literal notranslate"><span class="pre">qtest::assertTrue</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-assertnil"><code class="docutils literal notranslate"><span class="pre">qtest::assertNil</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-asserteq"><code class="docutils literal notranslate"><span class="pre">qtest::assertEq</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-assertnoteq"><code class="docutils literal notranslate"><span class="pre">qtest::assertNotEq</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-assertmember"><code class="docutils literal notranslate"><span class="pre">qtest::assertMember</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-assertnotmember"><code class="docutils literal notranslate"><span class="pre">qtest::assertNotMember</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-assertisinstance"><code class="docutils literal notranslate"><span class="pre">qtest::assertIsInstance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-assertnotisinstance"><code class="docutils literal notranslate"><span class="pre">qtest::assertNotIsInstance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-assertraises"><code class="docutils literal notranslate"><span class="pre">qtest::assertRaises</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-assertalmostequal"><code class="docutils literal notranslate"><span class="pre">qtest::assertAlmostEqual</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qtest-assertnotalmostequal"><code class="docutils literal notranslate"><span class="pre">qtest::assertNotAlmostEqual</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#standard-library-functions-and-macros">Standard Library Functions and Macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qub-checktype"><code class="docutils literal notranslate"><span class="pre">qub::checkType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qub-equal"><code class="docutils literal notranslate"><span class="pre">qub::equal</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qub-nequal"><code class="docutils literal notranslate"><span class="pre">qub::nequal</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qub-allequal"><code class="docutils literal notranslate"><span class="pre">qub::allEqual</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qub-listfilerec"><code class="docutils literal notranslate"><span class="pre">qub::listFileRec</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qub-foldl"><code class="docutils literal notranslate"><span class="pre">qub::foldl</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qub-foldr"><code class="docutils literal notranslate"><span class="pre">qub::foldr</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qub-sum"><code class="docutils literal notranslate"><span class="pre">qub::sum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qub-lcmp"><code class="docutils literal notranslate"><span class="pre">qub:::lcmp</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qub-joinlists"><code class="docutils literal notranslate"><span class="pre">qub::joinLists</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qub-range"><code class="docutils literal notranslate"><span class="pre">qub::range</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qub-almostequal"><code class="docutils literal notranslate"><span class="pre">qub::almostEqual</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qub-startswith"><code class="docutils literal notranslate"><span class="pre">qub::startsWith</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">skill_tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>SKILL Tools</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/readme.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="skill-tools">
+<h1>SKILL Tools<a class="headerlink" href="#skill-tools" title="Permalink to this headline">¶</a></h1>
+<p>Tools to ease working with SKILL and SKILL++ in Cadence Virtuoso. The main feature of interest is the unit testing framework in the folder <code class="docutils literal notranslate"><span class="pre">qtest</span></code>.
+This repo contains the code that I use regularly in my PhD so it’s also available in case anyone finds any use for it.
+There’s not a lot of SKILL code in the wild beyond the Cadence forums.</p>
+<div class="section" id="project-structure">
+<h2>Project Structure<a class="headerlink" href="#project-structure" title="Permalink to this headline">¶</a></h2>
+<p>| Folder | Namespace | Purpose
+|—|—|—|
+| <code class="docutils literal notranslate"><span class="pre">circuits</span></code> | <code class="docutils literal notranslate"><span class="pre">qub</span></code> | Circuit analysis
+| <code class="docutils literal notranslate"><span class="pre">design_environment</span></code> | <code class="docutils literal notranslate"><span class="pre">qub</span></code> | Manipulating the Cadence Virtuoso design environment
+| <code class="docutils literal notranslate"><span class="pre">geometry</span></code> | <code class="docutils literal notranslate"><span class="pre">qub</span></code> | Geometry calculations
+| <code class="docutils literal notranslate"><span class="pre">ocean</span></code> | <code class="docutils literal notranslate"><span class="pre">qub</span></code> | Processing simulation results
+| <code class="docutils literal notranslate"><span class="pre">pcell</span></code> | <code class="docutils literal notranslate"><span class="pre">qub</span></code> | Generating custom PCells
+| <code class="docutils literal notranslate"><span class="pre">qtest</span></code> | <code class="docutils literal notranslate"><span class="pre">qtest</span></code> | Unit testing.
+| <code class="docutils literal notranslate"><span class="pre">std</span></code> | <code class="docutils literal notranslate"><span class="pre">qub</span></code> | A “standard library” of useful functions.
+| <code class="docutils literal notranslate"><span class="pre">inductor_generator</span></code> | <code class="docutils literal notranslate"><span class="pre">qub</span></code> | Inductor PCell generation.</p>
+</div>
+<div class="section" id="importing-the-project">
+<h2>Importing the project<a class="headerlink" href="#importing-the-project" title="Permalink to this headline">¶</a></h2>
+<p>Create the environment variable <code class="docutils literal notranslate"><span class="pre">QUB_CODE_REPO_DIR</span></code> and point it at the repo root directory.
+Add the <code class="docutils literal notranslate"><span class="pre">src</span></code> folder to the SKILL path and run <code class="docutils literal notranslate"><span class="pre">(load</span> <span class="pre">(strcat</span> <span class="pre">(getShellEnvVar</span> <span class="pre">&quot;QUB_CODE_REPO_DIR&quot;)</span> <span class="pre">&quot;/src/init.ils&quot;))</span></code> and all other modules will be imported.
+The <code class="docutils literal notranslate"><span class="pre">src</span></code> folder can be added to the SKILL path like so: <code class="docutils literal notranslate"><span class="pre">(setSkillPath</span> <span class="pre">(append</span> <span class="pre">(getSkillPath)</span> <span class="pre">(list</span> <span class="pre">(strcat</span> <span class="pre">(getShellEnvVar</span> <span class="pre">&quot;QUB_CODE_REPO_DIR&quot;)</span> <span class="pre">&quot;/src/&quot;))))</span></code>.
+If the inductor PCell code is to be used, this code library needs to be re-added using libInit.il for the Virtuoso library that the PCell resides in or else stream-out will fail.</p>
+</div>
+<div class="section" id="unit-testing">
+<h2>Unit Testing<a class="headerlink" href="#unit-testing" title="Permalink to this headline">¶</a></h2>
+<p>The unit testing framework is modelled after <a class="reference external" href="https://docs.python.org/3/library/unittest.html">Python’s <code class="docutils literal notranslate"><span class="pre">unittest</span></code> module</a> and provides a basic set of assertions for testing your code.</p>
+<div class="section" id="example-test">
+<h3>Example Test<a class="headerlink" href="#example-test" title="Permalink to this headline">¶</a></h3>
+<p>The test is run by calling <code class="docutils literal notranslate"><span class="pre">load</span></code> on the file containing the test.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nv">qtest::runSuites</span>
+  <span class="p">(</span><span class="nv">qtest::TestSuite</span> <span class="p">((</span><span class="nv">f</span> <span class="nv">qub:::join_lists</span><span class="p">))</span>
+    <span class="p">(</span><span class="nv">qtest::TestCase</span> <span class="nv">join_three_lists</span>
+      <span class="p">(</span><span class="nv">qtest::assertEqual</span> <span class="p">(</span><span class="nb">list</span> <span class="s">&quot;X&quot;</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">)</span>
+                           <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">))))))</span>
+  <span class="p">(</span><span class="nv">qtest::TestSuite</span> <span class="p">((</span><span class="nv">f</span> <span class="nv">qub::flatten_list</span><span class="p">))</span>
+    <span class="p">(</span><span class="nv">qtest::TestCase</span> <span class="nv">normal_use</span>
+      <span class="p">(</span><span class="nv">qtest::assertEqual</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span><span class="p">)</span>
+                           <span class="p">(</span><span class="nv">f</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">1</span> <span class="mi">2</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">3</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">4</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">)</span> <span class="mi">7</span><span class="p">))))))))</span>
+</pre></div>
+</div>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">load</span> <span class="s">&quot;./code/src/std/test_lists.ils&quot;</span><span class="p">)</span>
+<span class="mi">1</span> <span class="nv">of</span> <span class="mi">2</span> <span class="nv">tests</span> <span class="nv">passed</span> <span class="p">(</span><span class="mi">1</span> <span class="nv">failures</span><span class="p">)</span> <span class="p">(</span><span class="mi">0</span> <span class="nv">skipped</span><span class="p">)</span> <span class="p">(</span><span class="mi">0</span> <span class="nv">expected</span> <span class="nv">failures</span><span class="p">)</span>
+<span class="nv">Test:</span> <span class="nv">join_three_lists</span>
+<span class="nv">Result:</span> <span class="nv">Fail</span>
+ <span class="nv">Message:</span> <span class="nv">No</span> <span class="nv">msg.</span>
+ <span class="nv">Inputs:</span> <span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="s">&quot;X&quot;</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">)</span> <span class="p">(</span><span class="nv">f</span> <span class="nb">list</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span><span class="p">)</span> <span class="nb">list</span><span class="p">(</span><span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="nb">list</span><span class="p">(</span><span class="mi">5</span> <span class="mi">6</span><span class="p">))))</span>
+ <span class="nv">Evaluated</span> <span class="nv">Inputs:</span> <span class="p">((</span><span class="s">&quot;X&quot;</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">)</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="main-functions-and-macros">
+<h2>Main Functions and Macros<a class="headerlink" href="#main-functions-and-macros" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="qtest-runalltests">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::runAllTests</span></code><a class="headerlink" href="#qtest-runalltests" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  |  Side Effect(s) |
+|—————–|—————-|
+| Directory (<code class="docutils literal notranslate"><span class="pre">string</span></code>)|Calls <code class="docutils literal notranslate"><span class="pre">load</span></code> on all files prefixed with <code class="docutils literal notranslate"><span class="pre">test_</span></code> in the directory |</p>
+<p>Takes a folder path and loads all modules prefixed with test_.</p>
+</div>
+<div class="section" id="qtest-testcase">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::TestCase</span></code><a class="headerlink" href="#qtest-testcase" title="Permalink to this headline">¶</a></h3>
+<p>| Parameters(s)| Keyword Parameters  | Output(s)
+|—|—|—|
+| Test Name (unquoted symbol) |<code class="docutils literal notranslate"><span class="pre">skip</span></code> (bool)| List of the test name symbol and the function object
+|body|  <code class="docutils literal notranslate"><span class="pre">expect_fail</span></code> (bool)</p>
+<p>Represents a single test. Can contain any code but must return the result of an assertion function. The test name is contained in a list with the function object so tests don’t pollute the top level namespace.</p>
+<div class="section" id="skipping-a-test">
+<h4>Skipping a test<a class="headerlink" href="#skipping-a-test" title="Permalink to this headline">¶</a></h4>
+<p>To mark a test to be skipped, set the <code class="docutils literal notranslate"><span class="pre">skip</span></code> keyword argument to true.</p>
+</div>
+<div class="section" id="marking-a-test-that-you-expect-to-fail">
+<h4>Marking a test that you expect to fail<a class="headerlink" href="#marking-a-test-that-you-expect-to-fail" title="Permalink to this headline">¶</a></h4>
+<p>Set the <code class="docutils literal notranslate"><span class="pre">expect_fail</span></code> keyword argument to true. If the test passes it will count as a pass but if it fail it will not be recorded as a fail.</p>
+</div>
+</div>
+<div class="section" id="qtest-testsuite">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::TestSuite</span></code><a class="headerlink" href="#qtest-testsuite" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Output(s) |
+|—|—|
+| Test Cases | List containing lists returned by <code class="docutils literal notranslate"><span class="pre">qtest::TestCase</span></code> |</p>
+<p>A collection of test cases. A suite should be used to test a single function or method.</p>
+</div>
+<div class="section" id="qtest-runsuites">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::runSuites</span></code><a class="headerlink" href="#qtest-runsuites" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Side Effect(s) |
+|—————–|—————-|
+| Any number of Test Suites | Prints the results of the tests |</p>
+<p>Test suites should be written in the body of this macro. When the module file is loaded in Virtuoso, the tests are initialised and the results are printed in the CIW.</p>
+</div>
+</div>
+<div class="section" id="assertions">
+<h2>Assertions<a class="headerlink" href="#assertions" title="Permalink to this headline">¶</a></h2>
+<p>Each assertion takes a keyword argument <code class="docutils literal notranslate"><span class="pre">msg</span></code> which is printed if the test fails.</p>
+<div class="section" id="qtest-assertequal">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::assertEqual</span></code><a class="headerlink" href="#qtest-assertequal" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Keyword Parameters | Output(s) |
+|—————–|———–|—|
+| a | msg (<code class="docutils literal notranslate"><span class="pre">string</span></code>) | <code class="docutils literal notranslate"><span class="pre">qtest::Result</span></code> |
+| b</p>
+<p>Checks if two objects are equal. Uses the <code class="docutils literal notranslate"><span class="pre">qub::equal</span></code> method to allow you to implement equality for your own objects as well as numbers, strings etc.</p>
+</div>
+<div class="section" id="qtest-assertnotequal">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::assertNotEqual</span></code><a class="headerlink" href="#qtest-assertnotequal" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Keyword Parameters | Output(s) |
+|—————–|———–|—|
+| a | msg (<code class="docutils literal notranslate"><span class="pre">string</span></code>) | <code class="docutils literal notranslate"><span class="pre">qtest::Result</span></code> |
+| b</p>
+<p>Checks if two objects are not equal. Uses the <code class="docutils literal notranslate"><span class="pre">qub::notEqual</span></code> method to allow you to implement equality for your own objects as well as numbers, strings etc.</p>
+</div>
+<div class="section" id="qtest-asserttrue">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::assertTrue</span></code><a class="headerlink" href="#qtest-asserttrue" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Keyword Parameters | Output(s) |
+|—————–|———–|—|
+| a | msg (<code class="docutils literal notranslate"><span class="pre">string</span></code>) | <code class="docutils literal notranslate"><span class="pre">qtest::Result</span></code> |</p>
+<p>Checks that the argument is true.</p>
+</div>
+<div class="section" id="qtest-assertnil">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::assertNil</span></code><a class="headerlink" href="#qtest-assertnil" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Keyword Parameters | Output(s) |
+|—————–|———–|—|
+| a | msg (<code class="docutils literal notranslate"><span class="pre">string</span></code>) | <code class="docutils literal notranslate"><span class="pre">qtest::Result</span></code> |</p>
+<p>Checks that the argument is <code class="docutils literal notranslate"><span class="pre">nil</span></code>.</p>
+</div>
+<div class="section" id="qtest-asserteq">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::assertEq</span></code><a class="headerlink" href="#qtest-asserteq" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Keyword Parameters | Output(s) |
+|—————–|———–|—|
+| a | msg (<code class="docutils literal notranslate"><span class="pre">string</span></code>) | <code class="docutils literal notranslate"><span class="pre">qtest::Result</span></code> |
+| b</p>
+<p>Both arguments are the same object.</p>
+</div>
+<div class="section" id="qtest-assertnoteq">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::assertNotEq</span></code><a class="headerlink" href="#qtest-assertnoteq" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Keyword Parameters | Output(s) |
+|—————–|———–|—|
+| a | msg (<code class="docutils literal notranslate"><span class="pre">string</span></code>) | <code class="docutils literal notranslate"><span class="pre">qtest::Result</span></code> |
+| b</p>
+<p>The arguments are different objects.</p>
+</div>
+<div class="section" id="qtest-assertmember">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::assertMember</span></code><a class="headerlink" href="#qtest-assertmember" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Keyword Parameters | Output(s) |
+|—————–|———–|—|
+| value | msg (<code class="docutils literal notranslate"><span class="pre">string</span></code>) | <code class="docutils literal notranslate"><span class="pre">qtest::Result</span></code> |
+| list</p>
+<p>The object is a member of the list.</p>
+</div>
+<div class="section" id="qtest-assertnotmember">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::assertNotMember</span></code><a class="headerlink" href="#qtest-assertnotmember" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Keyword Parameters | Output(s) |
+|—————–|———–|—|
+| value | msg (<code class="docutils literal notranslate"><span class="pre">string</span></code>) | <code class="docutils literal notranslate"><span class="pre">qtest::Result</span></code> |
+| list</p>
+<p>The object is not a member of the list.</p>
+</div>
+<div class="section" id="qtest-assertisinstance">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::assertIsInstance</span></code><a class="headerlink" href="#qtest-assertisinstance" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Keyword Parameters | Output(s) |
+|—————–|———–|—|
+| Object | msg (<code class="docutils literal notranslate"><span class="pre">string</span></code>) | <code class="docutils literal notranslate"><span class="pre">qtest::Result</span></code> |
+| Quoted Class</p>
+<p>The object is an instance of the class.</p>
+</div>
+<div class="section" id="qtest-assertnotisinstance">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::assertNotIsInstance</span></code><a class="headerlink" href="#qtest-assertnotisinstance" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Keyword Parameters | Output(s) |
+|—————–|———–|—|
+| Object | msg (<code class="docutils literal notranslate"><span class="pre">string</span></code>) | <code class="docutils literal notranslate"><span class="pre">qtest::Result</span></code> |
+| Quoted Class</p>
+<p>The object is not an instance of the class.</p>
+</div>
+<div class="section" id="qtest-assertraises">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::assertRaises</span></code><a class="headerlink" href="#qtest-assertraises" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Keyword Parameters | Output(s) |
+|—————–|———–|—|
+| Function Call | msg (<code class="docutils literal notranslate"><span class="pre">string</span></code>) | <code class="docutils literal notranslate"><span class="pre">qtest::Result</span></code> |</p>
+<p>Checks that the expression raises an error using <code class="docutils literal notranslate"><span class="pre">error</span></code>.
+It may not catch other errors within the expression.</p>
+</div>
+<div class="section" id="qtest-assertalmostequal">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::assertAlmostEqual</span></code><a class="headerlink" href="#qtest-assertalmostequal" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Keyword Parameters | Output(s) |
+|—————–|———–|—|
+| a | msg (<code class="docutils literal notranslate"><span class="pre">string</span></code>) | <code class="docutils literal notranslate"><span class="pre">qtest::Result</span></code> |
+| b</p>
+<p>Checks that two floats are almost equal. Uses <code class="docutils literal notranslate"><span class="pre">qub::almostEqual</span></code> which is a port of Python’s <a class="reference external" href="https://docs.python.org/3/library/math.html#math.isclose"><code class="docutils literal notranslate"><span class="pre">math.isclose</span></code></a> and uses the same optional arguments.</p>
+</div>
+<div class="section" id="qtest-assertnotalmostequal">
+<h3><code class="docutils literal notranslate"><span class="pre">qtest::assertNotAlmostEqual</span></code><a class="headerlink" href="#qtest-assertnotalmostequal" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter(s)  | Keyword Parameters | Output(s) |
+|—————–|———–|—|
+| a | msg (<code class="docutils literal notranslate"><span class="pre">string</span></code>) | <code class="docutils literal notranslate"><span class="pre">qtest::Result</span></code> |
+| b</p>
+<p>Checks that two floats are not almost equal.</p>
+</div>
+</div>
+<div class="section" id="standard-library-functions-and-macros">
+<h2>Standard Library Functions and Macros<a class="headerlink" href="#standard-library-functions-and-macros" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="qub-checktype">
+<h3><code class="docutils literal notranslate"><span class="pre">qub::checkType</span></code><a class="headerlink" href="#qub-checktype" title="Permalink to this headline">¶</a></h3>
+<p>| Parameters | Side Effects |
+| — | — |
+| Object | Throws an error if the object is of the expected type.
+| Quoted Class Name</p>
+<p>For implementing run-time type checking in functions.</p>
+</div>
+<div class="section" id="qub-equal">
+<h3><code class="docutils literal notranslate"><span class="pre">qub::equal</span></code><a class="headerlink" href="#qub-equal" title="Permalink to this headline">¶</a></h3>
+<p>| Parameters | Result |
+| — | — |
+| a | Bool
+| b</p>
+<p>A generic function for implementing equality for your own types.</p>
+</div>
+<div class="section" id="qub-nequal">
+<h3><code class="docutils literal notranslate"><span class="pre">qub::nequal</span></code><a class="headerlink" href="#qub-nequal" title="Permalink to this headline">¶</a></h3>
+<p>| Parameters | Result |
+| — | — |
+| a | Bool
+| b</p>
+<p>A generic function for implementing inequality for your own types.</p>
+</div>
+<div class="section" id="qub-allequal">
+<h3><code class="docutils literal notranslate"><span class="pre">qub::allEqual</span></code><a class="headerlink" href="#qub-allequal" title="Permalink to this headline">¶</a></h3>
+<p>| Parameters | Result |
+| — | — |
+| <code class="docutils literal notranslate"><span class="pre">&#64;rest</span> <span class="pre">values</span></code> | bool</p>
+<p>Checks if all values are equal. It uses <code class="docutils literal notranslate"><span class="pre">qub::equal</span></code> for checking equality.</p>
+</div>
+<div class="section" id="qub-listfilerec">
+<h3><code class="docutils literal notranslate"><span class="pre">qub::listFileRec</span></code><a class="headerlink" href="#qub-listfilerec" title="Permalink to this headline">¶</a></h3>
+<p>| Parameter | Result |
+|—|—|
+| Path (string) | List of files in the directory |</p>
+<p>Recursively searches the path for all files. It ignores all dotted directories.</p>
+</div>
+<div class="section" id="qub-foldl">
+<h3><code class="docutils literal notranslate"><span class="pre">qub::foldl</span></code><a class="headerlink" href="#qub-foldl" title="Permalink to this headline">¶</a></h3>
+<p>| Paramater | Result |
+|—|—|
+| fn(accumulator value) | The “folded” value
+| Initial Value
+| List of Values</p>
+<p>The <a class="reference external" href="https://wiki.haskell.org/Fold">HaskellWiki</a> can probably explain this better than I could.</p>
+</div>
+<div class="section" id="qub-foldr">
+<h3><code class="docutils literal notranslate"><span class="pre">qub::foldr</span></code><a class="headerlink" href="#qub-foldr" title="Permalink to this headline">¶</a></h3>
+<p>The same as <code class="docutils literal notranslate"><span class="pre">qub::foldl</span></code> but it calls <code class="docutils literal notranslate"><span class="pre">reverse</span></code> on the list before it processes it.</p>
+</div>
+<div class="section" id="qub-sum">
+<h3><code class="docutils literal notranslate"><span class="pre">qub::sum</span></code><a class="headerlink" href="#qub-sum" title="Permalink to this headline">¶</a></h3>
+<p>Sums a list of numbers</p>
+</div>
+<div class="section" id="qub-lcmp">
+<h3><code class="docutils literal notranslate"><span class="pre">qub:::lcmp</span></code><a class="headerlink" href="#qub-lcmp" title="Permalink to this headline">¶</a></h3>
+<p>An implementation of python’s list comprehensions.
+The predicate is optional.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="nv">&gt;&gt;&gt;</span><span class="p">(</span><span class="nv">qub:::lcmp</span> <span class="p">(</span><span class="nv">times</span> <span class="nv">x</span> <span class="mi">2</span><span class="p">)</span> <span class="nv">for</span> <span class="nv">x</span> <span class="nv">in</span> <span class="p">(</span><span class="nb">list</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="nb">evenp</span> <span class="nv">x</span><span class="p">))</span>
+<span class="p">(</span><span class="mi">4</span> <span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="qub-joinlists">
+<h3><code class="docutils literal notranslate"><span class="pre">qub::joinLists</span></code><a class="headerlink" href="#qub-joinlists" title="Permalink to this headline">¶</a></h3>
+<p>| Paramater | Result |
+| — | — |
+| List of lists | A single list of the values within the input lists |</p>
+</div>
+<div class="section" id="qub-range">
+<h3><code class="docutils literal notranslate"><span class="pre">qub::range</span></code><a class="headerlink" href="#qub-range" title="Permalink to this headline">¶</a></h3>
+<p>| Keyword parameters | Result |
+| — | — |
+| start | List of integers
+| stop
+| step</p>
+<p>A port of python’s <code class="docutils literal notranslate"><span class="pre">range</span></code> function.</p>
+<div class="highlight-lisp notranslate"><div class="highlight"><pre><span></span><span class="nv">&gt;&gt;&gt;</span><span class="p">(</span><span class="nv">qub::range</span> <span class="nv">?start</span> <span class="mi">0</span> <span class="nv">?stop</span> <span class="mi">20</span> <span class="nv">?step</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span> <span class="mi">3</span> <span class="mi">6</span> <span class="mi">9</span> <span class="mi">12</span>
+    <span class="mi">15</span> <span class="mi">18</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="qub-almostequal">
+<h3><code class="docutils literal notranslate"><span class="pre">qub::almostEqual</span></code><a class="headerlink" href="#qub-almostequal" title="Permalink to this headline">¶</a></h3>
+<p>| Parameters | Keyword Parameters | Result |
+|—|—|—|
+| a |<code class="docutils literal notranslate"><span class="pre">rel_tol</span></code>| Bool
+| b | <code class="docutils literal notranslate"><span class="pre">abs_tol</span></code></p>
+<p>Checks that two values are almost equal. This is a generic function and can be applied to your own types. The method specialised on numbers is a port of Python’s <a class="reference external" href="https://docs.python.org/3/library/math.html#math.isclose"><code class="docutils literal notranslate"><span class="pre">math.isclose</span></code></a> and uses the same optional arguments.</p>
+<p><code class="docutils literal notranslate"><span class="pre">rel_tol</span></code> is the relative tolerance. 0.05 would be a 5% relative tolerance.
+<code class="docutils literal notranslate"><span class="pre">abs_tol</span></code> is the absolute tolerance.</p>
+</div>
+<div class="section" id="qub-startswith">
+<h3><code class="docutils literal notranslate"><span class="pre">qub::startsWith</span></code><a class="headerlink" href="#qub-startswith" title="Permalink to this headline">¶</a></h3>
+<p>| Parameters | Result |
+| —|—|
+| string | Bool
+| prefix (string)</p>
+<p>Checks if a string begins with a particular prefix</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to skill_tools’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, MatthewLoveQUB
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
