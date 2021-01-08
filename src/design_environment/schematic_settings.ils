@@ -1,0 +1,63 @@
+; Get the text of every label object where the first line is "qub_settings"
+; Args:
+;  instances: a list of schematic instance objects
+(defun qub::findSettingsTextBlocks (instances)
+  (defun pred (x)
+      (and (equal x->objType "label") 
+           (equal (car (parseString x->theLabel "\n")) "qub_settings")))
+  (qub::lcmp x->theLabel for x in instances if (pred x)))
+
+(defun qub::makeEmptySchematicSettings ()
+  (list nil 'merge nil 'prefix_instance_name nil 'wire_length 0.75))
+
+; Parses a string of settings text lines into a settings plist and returns the plist
+; Args
+;   Settings: A string of the user settings
+(defun qub::parseSchematicSettings (settings_text)
+  (letseq ((lines (parseString settings_text "\n"))
+           (first_line (car lines)))
+    (when (equal first_line "qub_settings")
+      (letseq ((parsed_lines (mapcar qub::parseSchematicSettingsLine lines))
+               (valid_lines (setof line parsed_lines (nequal line->cmd "INVALID")))
+               (invalid_lines (setof line parsed_lines (equal line->cmd "INVALID")))
+               (settings (qub::makeEmptySchematicSettings)))
+        (mapc (lambda (x) (qub::addSettingsEntry x settings)) valid_lines)
+        settings))))
+            
+; Parse a settings line into a property list with fields for "cmd" and "arg"
+; These represent the command, e.g. "wire_length", and the argument, e.g. 0.75
+; Some of the fields like wire_length and prefix_instance_name are parsed into
+; their appropriate data types instead of being left as strings
+(defun qub::parseSchematicSettingsLine (line)
+  (defun makeCmd (cmd arg mod)
+    (list nil 'command cmd 'argument arg 'mode mod))
+  (defun makeInvalidCmd ()
+    (makeCmd "INVALID" line nil))
+  (letseq ((vals (parseString line "="))
+           (cmd (car vals))
+           (arg (cadr vals)))
+    (cond ((equal cmd "merge") (makeCmd cmd (parseString arg ",") "add"))
+          ((equal cmd "prefix_instance_name")
+           (cond ((equal arg "t") (makeCmd cmd t "set"))
+                 ((equal arg "nil") (makeCmd cmd nil "set"))
+                 (t (makeInvalidCmd))))
+          ((equal cmd "wire_length")
+           (let ((parsed_wire_length (atof arg)))
+             (if (floatp parsed_wire_length)
+                 (makeCmd cmd parsed_wire_length "set")
+                 (makeInvalidCmd))))
+          (t (makeInvalidCmd)))))
+
+; Add the new entry to the settings object
+; It mutates the settings plist passed in
+; Args:
+;   Entry: Property list with fields for "command" and "argument"
+(defun qub::addSettingsEntry (entry settings)
+  (let ((settings_field (get settings entry->command)))
+    (cond ((equal entry->mode "set")
+           (putprop settings entry->argument entry->command))
+          ((equal entry->mode "add")
+           (putprop settings
+                    (qub::joinLists (list settings_field entry->argument))
+                    entry->command))
+          (t nil))))

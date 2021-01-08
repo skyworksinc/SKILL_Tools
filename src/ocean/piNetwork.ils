@@ -2,7 +2,17 @@
 ; Args:
 ;   f0: float
 ;       The frequency of the plot marker
-(defun qub::ocnPiNetwork (f0)
+;   LC: bool
+;      Plot eqivalent series inductance/capacitance of the impedance
+;   ports: (list int int)
+;      The S-parameter index of the two ports under excitation
+;   zero_vals: bool
+;      Sets L and C values to zero if they're negative
+(defun qub::ocnPiNetwork (@key
+                          (f0 5.4G)
+                          (LC t)
+                          (ports (list 1 2))
+                          (zero_vals t))
   ; Y Network Parameters
   ; Assumed to be in the following form.
   ;
@@ -11,23 +21,92 @@
   ;   Zx     Zy
   ;   |      |
   ; O----------O
-
-  Y12 = (ypm "sp" 1 2)
-  Y11 = (ypm "sp" 1 1)
-  Y22 = (ypm "sp" 2 2)
-
-  Zz = (quotient -1.0 Y12)
-  Zx = (quotient 1.0 (plus Y11 Y12))
-  Zy = (quotient 1.0 (plus Y22 Y12))
-
-  Xx = (imag Zx)
-  Xy = (imag Zy)
-  Xz = (imag Zz)
-  
-  Rx = (real Zx)
-  Ry = (real Zy)
-  Rz = (real Zz)
-
-  winId = (newWindow)
-  (plot Xx Xy Xz Rx Ry Rz ?expr (list "Xx" "Xy" "Xz" "Rx" "Ry" "Rz") ?yNumber (list 1 1 1 2 2 2))
-  (awvPlaceXMarker winId f0 ?subwindow 1))
+  (letseq ((f (qub::sToF))
+           (p1 (car ports))
+           (p2 (cadr ports))
+           (w (times 2 qub::m.PI f))
+           (Y12 (ypm "sp" p1 p2))
+           (Y11 (ypm "sp" p1 p1))
+           (Y22 (ypm "sp" p2 p2))
+           (Zz (quotient -1.0 Y12))
+           (Zx (quotient 1.0 (plus Y11 Y12)))
+           (Zy (quotient 1.0 (plus Y22 Y12)))
+           (Xx (imag Zx))
+           (Xy (imag Zy))
+           (Xz (imag Zz))
+           (sRLCx (qub::ZToSeriesRLC Zx w))
+           (sRLCy (qub::ZToSeriesRLC Zy w))
+           (sRLCz (qub::ZToSeriesRLC Zz w))
+           (calcq (lambda (x r) (abs (quotient x r))))
+           (sQx (calcq Xx sRLCx->R))
+           (sQy (calcq Xy sRLCy->R))
+           (sQz (calcq Xz sRLCz->R))
+           (Yx (qub::ZToY Zx))
+           (Yy (qub::ZToY Zy))
+           (Yz (qub::ZToY Zz))
+           (pRLCx (qub::YToParallelRLC Yx w))
+           (pRLCy (qub::YToParallelRLC Yy w))
+           (pRLCz (qub::YToParallelRLC Yz w))
+           (setLC (lambda (x) 
+                    (if zero_vals
+                        (qub::mapWaveform (lambda (x) (if (lessp x 0) 0 x)) x)
+                        x)))
+           (winId (newWindow)))
+    (addTitle "Coupled Coil Analysis")
+    (addSubwindowTitle "Impedance")
+    (plot Xx Xy Xz 
+          ?expr (list "Xx" "Xy" "Xz")
+          ?yNumber (list 1 1 1))
+    (plot sRLCx->R sRLCy->R sRLCz->R 
+          ?expr (list "Rx" "Ry" "Rz")
+          ?yNumber (list 2 2 2))
+    (plot sQx sQy sQz 
+          ?expr (list "sQx" "sQy" "sQz")
+          ?yNumber (list 3 3 3))
+    (awvPlaceXMarker winId f0 ?subwindow 1)
+    (addSubwindow)
+    (addSubwindowTitle "Admittance")
+    (plot (imag Yx) (imag Yy) (imag Yz) 
+          ?expr (list "Bx" "By" "Bz")
+          ?yNumber (list 1 1 1))
+    (plot (real Yx) (real Yy) (real Yz) 
+          ?expr (list "Gx" "Gy" "Gz")
+          ?yNumber (list 2 2 2))
+    (awvPlaceXMarker winId f0 ?subwindow 2)
+    (when LC
+      (let ((subwindowIdxZ (addSubwindow)))
+        (addSubwindowTitle "Series RLC")
+        (plot (setLC sRLCx->R)
+              (setLC sRLCy->R)
+              (setLC sRLCz->R)
+              ?expr (list "Rx" "Ry" "Rz")
+              ?yNumber (list 1 1 1))
+        (plot (setLC sRLCx->L)
+              (setLC sRLCy->L)
+              (setLC sRLCz->L)
+              ?expr (list "Lx" "Ly" "Lz")
+              ?yNumber (list 2 2 2))
+        (plot (setLC sRLCx->C)
+              (setLC sRLCy->C)
+              (setLC sRLCz->C)
+              ?expr (list "Cx" "Cy" "Cz")
+              ?yNumber (list 3 3 3))
+        (awvPlaceXMarker winId f0 ?subwindow subwindowIdxZ)
+        (let ((subwindowIdxY (addSubwindow)))
+          (addSubwindowTitle "Parallel RLC")
+          (plot (setLC pRLCx->R)
+                (setLC pRLCy->R)
+                (setLC pRLCz->R)
+                ?expr (list "Rx" "Ry" "Rz")
+                ?yNumber (list 1 1 1))
+          (plot (setLC pRLCx->L)
+                (setLC pRLCy->L)
+                (setLC pRLCz->L)
+                ?expr (list "Lx" "Ly" "Lz")
+                ?yNumber (list 2 2 2))
+          (plot (setLC pRLCx->C)
+                (setLC pRLCy->C)
+                (setLC pRLCz->C)
+                ?expr (list "Cx" "Cy" "Cz")
+                ?yNumber (list 3 3 3))
+          (awvPlaceXMarker winId f0 ?subwindow subwindowIdxY))))))
