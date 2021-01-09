@@ -10,11 +10,14 @@ source:
     folder: src
   - path: ../docs
     folder: docs
+  - path: ../init.ils
+  - path: ../readme.md
 
 requirements:
   build:
     - python {{ python }}
     - setuptools
+    - sphinx
 
   run:
     - ids-skill
