@@ -18,6 +18,7 @@ requirements:
     - python {{ python }}
     - setuptools
     - sphinx
+    - recommonmark
 
   run:
     - ids-skill
