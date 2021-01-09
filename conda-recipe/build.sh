@@ -1,8 +1,8 @@
 # Add SKILL_Tools library
-mkdir -p "${PREFIX}/lib/skill/IDS-skill"
-for item in "src" "IDS-skill.init.ils" "IDS-skill.lmgrinit" "README.md"; do
+mkdir -p "${PREFIX}/lib/skill/${PKG_NAME}"
+for item in "src" "init.ils" "README.md"; do
 	cp -rf "${RECIPE_DIR}/../${item}" \
-       "${PREFIX}/lib/skill/IDS-skill"
+       "${PREFIX}/lib/skill/${PKG_NAME}"
 done
 
 # Copy the [de]activate scripts to $PREFIX/etc/conda/[de]activate.d.
@@ -18,6 +18,6 @@ done
 # Build documentation and add it to the conda env
 cd docs
 make html
-mkdir -p "${PREFIX}/docs/IDS"
+mkdir -p "${PREFIX}/docs/${PKG_NAME}"
 cp -rf build/html \
-   "${PREFIX}/docs/IDS/"
+   "${PREFIX}/docs/${PKG_NAME}/"
