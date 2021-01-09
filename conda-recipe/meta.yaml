@@ -19,6 +19,7 @@ requirements:
     - setuptools
     - sphinx
     - recommonmark
+    - sphinx_rtd_theme
 
   run:
     - ids-skill
