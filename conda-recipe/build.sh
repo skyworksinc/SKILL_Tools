@@ -15,3 +15,9 @@ for CHANGE in "activate" "deactivate"; do
        "${PREFIX}/etc/conda/${CHANGE}.d/${PKG_NAME}_${CHANGE}.csh"
 done
 
+# Build documentation and add it to the conda env
+cd docs
+make html
+mkdir -p "${PREFIX}/docs/IDS"
+cp -rf build/html \
+   "${PREFIX}/docs/IDS/"
