@@ -1,3 +1,0 @@
-unset IDS_LMGR_INIT
-unset IDS_DATA_REG
-unset IDS_SKILL_DIR

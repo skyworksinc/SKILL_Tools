@@ -6,23 +6,42 @@ There's not a lot of SKILL code in the wild beyond the Cadence forums.
 
 ## Project Structure
 
-| Folder | Namespace | Purpose
-|---|---|---|
-| `circuits` | `qub` | Circuit analysis
-| `design_environment` | `qub` | Manipulating the Cadence Virtuoso design environment
-| `geometry` | `qub` | Geometry calculations
-| `ocean` | `qub` | Processing simulation results
-| `pcell` | `qub` | Generating custom PCells
-| `qtest` | `qtest` | Unit testing.
-| `std` | `qub` | A "standard library" of useful functions.
-| `inductor_generator` | `qub` | Inductor PCell generation.
+| Folder               | Namespace | Purpose |
+|----------------------|-----------|---------|
+| `circuits`           | `qub`     | Circuit analysis
+| `design_environment` | `qub`     | Manipulating the Cadence Virtuoso design environment |
+| `geometry`           | `qub`     | Geometry calculations |
+| `ocean`              | `qub`     | Processing simulation results |
+| `pcell`              | `qub`     | Generating custom PCells |
+| `qtest`              | `qtest`   | Unit testing. |
+| `std`                | `qub`     | A "standard library" of useful functions. |
+| `inductor_generator` | `qub`     | Inductor PCell generation. |
 
-## Importing the project
+## Importing the project 
 
-Create the environment variable `QUB_CODE_REPO_DIR` and point it at the repo root directory.
-Add the `src` folder to the SKILL path and run `(load (strcat (getShellEnvVar "QUB_CODE_REPO_DIR") "/src/init.ils"))` and all other modules will be imported.
-The `src` folder can be added to the SKILL path like so: `(setSkillPath (append (getSkillPath) (list (strcat (getShellEnvVar "QUB_CODE_REPO_DIR") "/src/"))))`.
-If the inductor PCell code is to be used, this code library needs to be re-added using libInit.il for the Virtuoso library that the PCell resides in or else stream-out will fail.
+### Import from source
+
+1. Clone the skill_tools github repo from:
+   https://github.com/MatthewLoveQUB/SKILL_Tools
+2. Create the environment variable `QUB_CODE_REPO_DIR` and point it at the repo root directory.
+3. Add the `src` folder to the SKILL path:
+   ```lisp
+   (setSkillPath (append (getSkillPath) (list (strcat (getShellEnvVar "QUB_CODE_REPO_DIR") "/src/")))).
+   ```
+4. Run the following in the Virtuoso command line to load all the modules:
+    ```lisp
+   (load (strcat (getShellEnvVar "QUB_CODE_REPO_DIR") "/src/init.ils"))
+   ```
+5. If the inductor PCell code is to be used, this code library needs to be re-added using libInit.il for the Virtuoso 
+   library that the PCell resides in or else stream-out will fail.
+
+### Build and install into Conda
+Currently a 
+
+0. You will first need a conda environment.  Here are some instructions:
+   https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html
+1. 
+
 
 ## Unit Testing
 

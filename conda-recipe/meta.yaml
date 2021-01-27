@@ -21,10 +21,7 @@ requirements:
     - recommonmark
     - sphinx_rtd_theme
 
-  run:
-    - ids-skill
-
 about:
   home: https://github.com/skyworksinc/SKILL_Tools
   license: MIT
-  summary: qub and qtest SKILL Libraries
+  summary: qub and qtest SKILL Librarigi
